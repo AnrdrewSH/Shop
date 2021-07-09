@@ -12,63 +12,63 @@ namespace Practice
         static void Main(string[] args)
         {
             string want, wantname, wantcity, wantpname, wantprice, productname, name;
-            bool status = true;
             Console.WriteLine("Enter command; write |help| if you want to know all the commands");
             want = Console.ReadLine();
 
-            if (want == "help")
+            switch (want)
             {
+                case "help":
+                    Console.WriteLine("List of commands: ");
+                    Console.WriteLine("#################### ");
+                    Console.WriteLine("selectCustomers ");
+                    Console.WriteLine("selectOrders ");
+                    Console.WriteLine("enterCustomer ");
+                    Console.WriteLine("enterOrder ");
+                    Console.WriteLine("removeCustomer");
+                    Console.WriteLine("removeOrder");
+                    Console.WriteLine("#################### ");
+                    break;
+                case "selectCustomers":
+                    var customers = SelectCustomers();
+                    foreach (var customer in customers) Console.WriteLine(customer.Name);
+                    break;
+                case "selectOrders":
+                    var orders = SelectOrders();
+                    foreach (var order in orders) Console.WriteLine($"{order.ProductName} - {order.Price}");
+                    break;
+                case "enterCustomer":
+                    Console.WriteLine("Enter name of customer: ");
+                    wantname = Console.ReadLine();
+                    Console.WriteLine("Enter city of customer: ");
+                    wantcity = Console.ReadLine();
+                    var createdCustomerId = EnterCustomer(wantname, wantcity);
+                    Console.WriteLine($"Created customer id: {createdCustomerId}");
+                    break;
+                case "enterOrder":
+                    Console.WriteLine("Enter name of product: ");
+                    wantpname = Console.ReadLine();
+                    Console.WriteLine("Enter price: ");
+                    wantprice = Console.ReadLine();
+                    var createdOrderId = EnterOrder(wantpname, wantprice);
+                    Console.WriteLine($"Created order id: {createdOrderId}");
+                    break;
+                case "removeOrder":
+                    Console.WriteLine("Enter product name of order: ");
+                    productname = Console.ReadLine();
+                    RemoveOrder(productname);
+                    break;
+                case "removeCustomer":
+                    Console.WriteLine("Enter name of Customer: ");
+                    name = Console.ReadLine();
+                    RemoveCustomer(name);
+                    break;
+                default:
+                    Console.WriteLine("Wrong command");
+                    Console.WriteLine("To find out the available functionality enter");
+                    break;
 
-                Console.WriteLine("List of commands: ");
-                Console.WriteLine("#################### ");
-                Console.WriteLine("selectCustomers ");
-                Console.WriteLine("selectOrders ");
-                Console.WriteLine("enterCustomer ");
-                Console.WriteLine("enterOrder ");
-                Console.WriteLine("RemoveCustomer");
-                Console.WriteLine("RemoveOrder");
-                Console.WriteLine("#################### ");
             }
-            else if (want == "selectCustomers")
-            {
-                var customers = SelectCustomers();
-                foreach (var customer in customers) Console.WriteLine(customer.Name);
-            }
-            else if (want == "selectOrders")
-            {
-                var orders = SelectOrders();
-                foreach (var order in orders) Console.WriteLine($"{order.NameProduct} - {order.Price}");
-            }
-            else if (want == "enterCustomer")
-            {
-                Console.WriteLine("Enter name of customer: ");
-                wantname = Console.ReadLine();
-                Console.WriteLine("Enter city of customer: ");
-                wantcity = Console.ReadLine();
-                var createdCustomerId = EnterCustomer(wantname, wantcity);
-                Console.WriteLine($"Created customer id: {createdCustomerId}");
-            }
-            else if (want == "enterOrder")
-            {
-                Console.WriteLine("Enter name of product: ");
-                wantpname = Console.ReadLine();
-                Console.WriteLine("Enter price: ");
-                wantprice = Console.ReadLine();
-                var createdOrderId = EnterOrder(wantpname, wantprice);
-                Console.WriteLine($"Created order id: {createdOrderId}");
-            }
-            else if (want == "RemoveOrder")
-            {
-                Console.WriteLine("Enter product name of order: ");
-                productname = Console.ReadLine();
-                RemoveOrder(productname);
-            }
-            else if (want == "RemoveCustomer")
-            {
-                Console.WriteLine("Enter name of Customer: ");
-                name = Console.ReadLine();
-                RemoveCustomer(name);
-            }
+            
 
             static List<Customer> SelectCustomers()
             {
@@ -120,7 +120,7 @@ namespace Practice
                                 var order = new Order
                                 {
                                     OrderId = Convert.ToInt32(reader["Id"]),
-                                    NameProduct = Convert.ToString(reader["ProductName"]),
+                                    ProductName = Convert.ToString(reader["ProductName"]),
                                     Price = Convert.ToInt32(reader["Price"]),
                                 };
                                 orders.Add(order);

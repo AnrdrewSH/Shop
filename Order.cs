@@ -8,7 +8,7 @@ namespace Practice
 {
     public class Order
     {
-        public string NameProduct;
+        public string ProductName;
         public int Price;
         public int OrderId;
     }
